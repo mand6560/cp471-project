@@ -1,0 +1,16 @@
+func hello() {
+	int x = 5;
+	int y = 4;
+	int z = 10;
+	if (x < y) {
+		y = y + 5;
+		return y;
+    }
+    elif (z > y) {
+	    z = z - 3;
+	    return z;
+    }
+	else {
+		return x;
+    }
+}
