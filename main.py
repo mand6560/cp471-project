@@ -27,7 +27,7 @@ def main():
     print(file_contents)
 
     # Perform lexical analysis
-    tokens = lexer.scan(file_contents)
+    tokens, functions, Variables = lexer.scan(file_contents)
     # Perform parsing
     syntaxAnalyzer.parse(tokens)
     # Perform semantic analysis
