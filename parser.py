@@ -4,7 +4,7 @@ def parse(tokens):
     ind = 0 
     tos = ""
     toi = "" 
-    bracket_list = []
+
     
     while ind < tokens.length:
     
@@ -27,7 +27,7 @@ def parse(tokens):
     return 1
 
 def parse(toi):
-
+    bracket_list = []
     # We return what the next acceptable tokens
     if toi == "":
         return {"func"} 
