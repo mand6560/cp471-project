@@ -17,7 +17,7 @@ BRACKETS = ["{", "}", "(", ")","[", "]"]
 OPERATORS = ["+", "-", "/", "*", "="]
 COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
  
-def scan(text):
+def scan(text, symbol_table):
     # Split the block of text 
     newText= text.split("\n")
     # print(text)
@@ -32,6 +32,10 @@ def scan(text):
     FUNCTION_NAMES = []
     BRACKET_STACK = []
     i = 0
+    symbolEntry = None
+    symbolValue = ""
+    symbolType = None
+    insertSymbol = False
     for cLine in filterText:
         i+=1
         if cLine == "":
@@ -52,6 +56,19 @@ def scan(text):
         for token in cLine:
             token = token.strip()
             # print(token)
+
+            if insertSymbol == True:
+                # print("_____________________{}".format(token[-1]))
+                if token[-1] == ";":
+                    symbolValue += " " + token[:-1]
+                    print("_____________________{}".format(symbolValue))
+                    symbol_table[symbolEntry] = symbolValue, symbolType
+                    insertSymbol = False
+                    symbolValue = ""
+                    symbolType = None
+                else:
+                    symbolValue += " " + token
+
             if len(token) != 1:
                 if token[-1] == ";":
                     token = token[:-1]
@@ -68,6 +85,7 @@ def scan(text):
                     TOKENS.append(("bracket", token[0]))
                     token = token[1:]
                     
+
 
 
             if token in BRACKETS:
@@ -98,6 +116,7 @@ def scan(text):
             elif token in ["int", "float", "string"]:
                 TOKENS.append(("dataType",token))
                 varBool = True
+                symbolType = token
                 if token == "int":
                     intFlag = True
                 elif token == "float":
@@ -113,6 +132,7 @@ def scan(text):
  
             # Previous token toggled variable flag --> Current token is variable name (reset flag)
             elif varBool == True:
+                symbolEntry = token
                 TOKENS.append(("id", token))
                 varBool = False
                 VARIABLE_NAMES.append(token)
@@ -129,6 +149,10 @@ def scan(text):
             # Token is an operator
             elif token in OPERATORS:
                 TOKENS.append(("op", token))
+                
+                if token == "=":
+                    print("+++++++++++++++{}".format(token))
+                    insertSymbol = True
 
             # Token is an already defined variable name
             elif token in VARIABLE_NAMES:
@@ -136,7 +160,7 @@ def scan(text):
  
             # Token is an already defined function name
             elif token in FUNCTION_NAMES:
-                TOKENS.append(("func", token))
+                TOKENS.append(("func_def", token))
             
             # Token is a function
             elif "(" in token:
@@ -160,7 +184,7 @@ def scan(text):
             #     pass #TODO - WILL HANDLE LATER...
  
             else:
-                return 'error', token, ''
+                return 'error', token
 
             if endLine == True:
                 TOKENS.append(("END", ";"))
@@ -169,10 +193,8 @@ def scan(text):
                 TOKENS.append(("bracket", endVal))
                 endBracket = False
 
-    VARIABLES = []
-    for i in range(len(VARIABLE_NAMES)):
-        VARIABLES.append((VARIABLE_TYPES[i], VARIABLE_NAMES[i]))
-    return TOKENS, FUNCTION_NAMES, VARIABLES
+    print("~~~~~~~~~~~~~~~~~~~~{}".format(symbol_table))
+    return TOKENS, symbol_table
 
 
 #scan(temp)

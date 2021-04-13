@@ -29,22 +29,22 @@ def main():
     symbol_table = {}
 
     # Perform lexical analysis
-    lexer_results = lexer.scan(file_contents)
+    lexer_results = lexer.scan(file_contents, symbol_table)
     # Check for lexer error condition
     if lexer_results[0] == 'error':
         print('Error: lexer error, invalid token %s detected...' % lexer_results[1])
         sys.exit(1)
     else:
-        tokens, functions, variables = lexer.scan(file_contents)
+        tokens, symbol_table = lexer_results
     print("Tokens: {}".format(tokens))
-    print("Functions: {}".format(functions))
-    print("Variables: {}".format(variables))
+    # print("Functions: {}".format(functions))
+    # print("Variables: {}".format(variables))
 
     # Fill out symbol table with results from lexer
-    for function in functions:
-        symbol_table[function[1]] = function[0]
-    for variable in variables:
-        symbol_table[variable[1]] = variable[0]
+    # for function in functions:
+    #     symbol_table[function[1]] = function[0]
+    # for variable in variables:
+    #     symbol_table[variable[1]] = variable[0]
 
     print('Symbol Table: ')
     for key in symbol_table.keys():
