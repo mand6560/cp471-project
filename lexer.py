@@ -107,7 +107,7 @@ def scan(text):
             # Previous token toggled Function flag --> Current token is function name (reset flag)
             elif funcBool == True:
                 TOKENS.append(("id", token))
-                FUNCTION_NAMES.append((token, "PROC"))
+                FUNCTION_NAMES.append(("PROC", token))
                 TOKENS.append(("bracket", "{"))
                 funcBool = False
  
