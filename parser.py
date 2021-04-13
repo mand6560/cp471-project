@@ -1,4 +1,4 @@
-def main():
+def parse(tokens):
     #tokens is a list of tokens, where the elements take the format <identifier,type>
     #Walk through the list given to us
     ind = 0 
@@ -31,7 +31,6 @@ def parse(toi):
     # We return what the next acceptable tokens
     if toi == "":
         return {"func"} 
-          
     
     if toi ==  "func": 
         return {"id"}
