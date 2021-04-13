@@ -19,7 +19,8 @@ COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
  
 def scan(text):
     # Split the block of text 
-    newText= text.split("{")
+    newText= text.split("\n")
+    print(text)
     filterText = []
     for line in newText:
         codeLine = line.split("\n")
@@ -108,7 +109,6 @@ def scan(text):
             elif funcBool == True:
                 TOKENS.append(("id", token))
                 FUNCTION_NAMES.append(("PROC", token))
-                TOKENS.append(("bracket", "{"))
                 funcBool = False
  
             # Previous token toggled variable flag --> Current token is variable name (reset flag)
