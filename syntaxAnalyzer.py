@@ -6,7 +6,7 @@ def parse(tokens):
     toi = "" 
 
     
-    while ind < tokens.length:
+    while ind < len(tokens):
     
         # Getting the next expected possible values
         # We are also passing the type of token, not the token itself E.g: op, id, etc.
@@ -15,7 +15,9 @@ def parse(tokens):
         
         # Checking if the next value from the input is actually the expected value
         tos = tokens[ind][0]
-        if (tos not in return_vals and len(return_vals) != 0):
+        print(toi,tos,return_vals)
+        print("---> {}".format(tokens[ind]))
+        if (return_vals != None and tos not in return_vals and len(return_vals) != 0):
             return -1 
         
         
@@ -30,95 +32,111 @@ def parse_aux(toi):
     bracket_list = []
     # We return what the next acceptable tokens
     if toi == "":
-        return {"func"} 
+        return {"func_def"} 
     
-    if toi ==  "func": 
+    elif toi ==  "func_def": 
         return {"id"}
           
     
-    if toi ==  "id": 
-        return {"op"}
+    elif toi ==  "id": 
+        return {"op", "bracket","comp","END"}
+    
+    elif toi == "comp":
+        return {"id", "int", "float", "bool"}
+    
+    elif toi == "int": 
+        return {"END", "op", "bracket"}
           
     
-    if toi == "int": 
+    elif toi == "float": 
+        return {"END", "op", "bracket"}
+          
+    
+    elif toi == "bool": 
+        return {"END", "op", "bracket"}
+          
+    
+    elif toi == "string": 
+        return {"END"}
+
+    elif toi == "dataType":
         return {"id"}
           
     
-    if toi == "float": 
+    elif toi == "RTRN_STMT":
         return {"id"}
           
     
-    if toi == "bool": 
-        return {"id"}
+    # elif toi == "=": 
+    #     return {"id","float","int"} 
           
     
-    if toi == "string": 
-        return {"id"}
+    # elif toi == "+": 
+    #     return {"id","float","int"} 
           
     
-    if toi == "return":
-        return {" "}
+    # elif toi == "-": 
+    #     return {"id","float","int"} 
           
     
-    if toi == "=": 
-        return {"id","float","int"} 
+    # elif toi == "*": 
+    #     return {"id","float","int"} 
           
     
-    if toi == "+": 
-        return {"id","float","int"} 
+    # elif toi == "/": 
+    #     return {"id","float","int"} 
           
     
-    if toi == "-": 
-        return {"id","float","int"} 
+    # elif toi == "%": 
+    #     return {"id","float","int"}     
+
+    elif toi == "op":
+        return {"id","float","int"}     
           
     
-    if toi == "*": 
-        return {"id","float","int"} 
+    # elif toi == "^": 
+    #     return {"id","float","int"}             
           
     
-    if toi == "/": 
-        return {"id","float","int"} 
+    # elif toi == "<": 
+    #     return {"id","float","int"}             
           
     
-    if toi == "%": 
-        return {"id","float","int"}             
+    # elif toi == ">": 
+    #     return {"id","float","int"}             
           
     
-    if toi == "^": 
-        return {"id","float","int"}             
-          
-    
-    if toi == "<": 
-        return {"id","float","int"}             
-          
-    
-    if toi == ">": 
-        return {"id","float","int"}             
-          
-    
-    if toi == " ": 
+    elif toi == " ": 
         return {"id",}
           
     
-    if toi == "while": 
-        return {"id","float","int"} 
+    elif toi == "while_loop": 
+        return {"bracket"} 
           
     
-    if toi == "for": 
-        return {"id","int"} 
+    elif toi == "for_loop": 
+        return {"bracket"} 
           
     
-    if toi == "if": 
-        return {"id","float","int","bool"} 
+    # elif toi == "if": 
+    #     return {"id","float","int","bool", "bracket"} 
           
     
-    if toi == "elif": 
-        return {"id","float","int","bool"} 
+    # elif toi == "elif": 
+    #     return {"id","float","int","bool"} 
           
     
-    if toi == "else": 
-        return {"id","float","int","bool"} 
-          
+    # elif toi == "else": 
+    #     return {"id","float","int","bool"} 
+
+    elif toi == "cond":
+        return {"id","float","int","bool", "bracket"} 
+    
+    elif toi == "END":
+        return {"id", "dataType", "while", "for", "cond", "bracket", "RTRN_STMT", "while_loop", "for_loop"}
+    
+    elif toi == "bracket":
+        return {"id", "float", "int", "bool", "string", "while", "for", "bracket", "cond", "RTRN_STMT", "dataType"}
     
     else: 
         bracket_list.append(toi) 

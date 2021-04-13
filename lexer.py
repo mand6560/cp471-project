@@ -50,7 +50,7 @@ def scan(text):
         cLine = cLine.split(" ")
         for token in cLine:
             token = token.strip()
-
+            print(token)
             if len(token) != 1:
                 if token[-1] == ";":
                     token = token[:-1]

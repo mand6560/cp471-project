@@ -43,7 +43,8 @@ def main():
     print('Symbol Table: ' + str(symbol_table))
 
     # Perform parsing
-    #syntaxAnalyzer.parse(tokens)
+    print(syntaxAnalyzer.parse(tokens))
+    
     # Perform semantic analysis
     pass
     # Perform backend
