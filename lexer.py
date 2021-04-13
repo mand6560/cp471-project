@@ -1,19 +1,12 @@
-temp = """func hello {
-	int x = 5;
-	int y = 4;
-	int z = 10;
-	if (x < y) {
-		y = y + 5;
-		return y;
+temp = """func main {
+	int x = 0;
+	int y = 0;
+	while (x < 3) {
+		y = y + 2;
+	}
+	return y;
 }
-elif ( z > y ) {
-	z = z - 3;
-	return z;
-}
-	else {
-		return x;
-}
-}
+
 
 
 """
@@ -65,13 +58,15 @@ def scan(text):
 
                 elif token[-1] in BRACKETS:
                     print(token)
+                    endVal = token[-1]
                     token = token[:-1]
                     endBracket = True
-                    endVal = token[-1]
+                    
 
                 if token[0] in BRACKETS:
-                    token = token[1:]
                     TOKENS.append(("bracket", token[0]))
+                    token = token[1:]
+                    
 
 
             if token in BRACKETS:
