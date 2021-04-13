@@ -1,4 +1,8 @@
 import sys
+import lexer
+import parser
+import semantic
+import backend
 
 
 def main():
@@ -23,12 +27,13 @@ def main():
     print(file_contents)
 
     # Perform lexical analysis
-
+    tokens = lexer.scan(file_contents)
     # Perform parsing
-
+    parser.parse(tokens)
     # Perform semantic analysis
-
+    pass
     # Perform backend
+    pass
 
 
 if __name__ == '__main__':
