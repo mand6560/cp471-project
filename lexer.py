@@ -20,7 +20,7 @@ COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
 def scan(text):
     # Split the block of text 
     newText= text.split("\n")
-    print(text)
+    # print(text)
     filterText = []
     for line in newText:
         codeLine = line.split("\n")
@@ -51,14 +51,14 @@ def scan(text):
         cLine = cLine.split(" ")
         for token in cLine:
             token = token.strip()
-            print(token)
+            # print(token)
             if len(token) != 1:
                 if token[-1] == ";":
                     token = token[:-1]
                     endLine = True
 
                 elif token[-1] in BRACKETS:
-                    print(token)
+                    # print(token)
                     endVal = token[-1]
                     token = token[:-1]
                     endBracket = True
@@ -160,9 +160,7 @@ def scan(text):
             #     pass #TODO - WILL HANDLE LATER...
  
             else:
-                pass # THROW ERROR MESSAGE
-                print(token)
-                print("ERROR")
+                return 'error', token, ''
 
             if endLine == True:
                 TOKENS.append(("END", ";"))

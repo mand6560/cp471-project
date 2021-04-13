@@ -29,10 +29,16 @@ def main():
     symbol_table = {}
 
     # Perform lexical analysis
-    tokens, functions, variables = lexer.scan(file_contents)
-    print("Tokens: {:}\n".format(tokens))
-    print("Functions: {}\n".format(functions))
-    print("Variables: {}\n".format(variables))
+    lexer_results = lexer.scan(file_contents)
+    # Check for lexer error condition
+    if lexer_results[0] == 'error':
+        print('Error: lexer error, invalid token %s detected...' % lexer_results[1])
+        sys.exit(1)
+    else:
+        tokens, functions, variables = lexer.scan(file_contents)
+    print("Tokens: {}".format(tokens))
+    print("Functions: {}".format(functions))
+    print("Variables: {}".format(variables))
 
     # Fill out symbol table with results from lexer
     for function in functions:
@@ -40,11 +46,17 @@ def main():
     for variable in variables:
         symbol_table[variable[1]] = variable[0]
 
-    print('Symbol Table: ' + str(symbol_table))
+    print('Symbol Table: ')
+    for key in symbol_table.keys():
+        print('%s -> %s' % (key, symbol_table[key]))
 
     # Perform parsing
-    print(syntaxAnalyzer.parse(tokens))
-    
+    parsing_result = syntaxAnalyzer.parse(tokens)
+    # Parser returns -1 in case of error
+    if parsing_result == -1:
+        print('Error: parsing error, check your code and try again...')
+        sys.exit(1)
+
     # Perform semantic analysis
     pass
     # Perform backend
