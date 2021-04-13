@@ -121,7 +121,7 @@ def parse(toi):
           
     
     else: 
-        bracket_list.insert(toi) 
+        bracket_list.append(toi) 
     return None
         
     
