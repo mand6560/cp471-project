@@ -20,36 +20,51 @@ def scan(text):
     newText= text.split("{")
     filterText = []
     for line in newText:
-        codeLine = line.split(";")
+        codeLine = line.split("\n")
         for filterLine in codeLine:
             filterText.append(filterLine.strip(" \n\t"))
     TOKENS = []
     VARIABLE_NAMES = []
     FUNCTION_NAMES = []
     BRACKET_STACK = []
+    i = 0
     for cLine in filterText:
+        i+=1
+        if cLine == "":
+            continue
         funcBool = False
         varBool = False
         opBool = False
         opVar = None
         compBool = False
         compVal = None
+        endLine = False
         cLine = cLine.split(" ")
         for token in cLine:
             token = token.strip()
+            if token[-1] == ";":
+                token = token[:-1]
+                endLine = True
+
+            if token in BRACKETS:
+                TOKENS.append(("bracket", token))
+
             # Current token is func --> Next token is a function name
-            if token == "func":
+            elif token == "func":
                 funcBool = True
+                TOKENS.append(("func_def", token))
                 BRACKET_STACK.append("{")
             
             # Current token is a datatype --> Next token is a variable name
             elif token in ["int", "float", "str"]:
+                TOKENS.append(("dataType",token))
                 varBool = True
  
             # Previous token toggled Function flag --> Current token is function name (reset flag)
             elif funcBool == True:
-                TOKENS.append(("func_def", token))
+                TOKENS.append(("id", token))
                 FUNCTION_NAMES.append(token)
+                TOKENS.append(("bracket", "{"))
                 funcBool = False
  
             # Previous token toggled variable flag --> Current token is variable name (reset flag)
@@ -93,8 +108,6 @@ def scan(text):
                 except:
                     pass
  
- 
- 
             # If token is a singular bracket
             elif token in BRACKETS and (chr(ord(token) - 1) in BRACKET_STACK[-1] or chr(ord(token) - 2) in BRACKET_STACK[-1]):
                 BRACKET_STACK.pop()
@@ -105,6 +118,10 @@ def scan(text):
                 print(chr(ord(token)))
                 print(token)
                 print("ERROR")
+
+            if endLine == True:
+                TOKENS.append(("END", ";"))
+                endLine = False
  
     return TOKENS
 

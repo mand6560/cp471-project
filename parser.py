@@ -10,12 +10,12 @@ def parse(tokens):
     
         # Getting the next expected possible values
         # We are also passing the type of token, not the token itself E.g: op, id, etc.
-        return_vals = parse(toi)
+        return_vals = parse_aux(toi)
         
         
         # Checking if the next value from the input is actually the expected value
         tos = tokens[ind][0]
-        if (tos not in return_vals and return_vals.length != 0):
+        if (tos not in return_vals and len(return_vals) != 0):
             return -1 
         
         
@@ -26,7 +26,7 @@ def parse(tokens):
 
     return 1
 
-def parse(toi):
+def parse_aux(toi):
     bracket_list = []
     # We return what the next acceptable tokens
     if toi == "":
