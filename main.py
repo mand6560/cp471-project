@@ -37,7 +37,7 @@ def main():
     for variable in variables:
         symbol_table[variable[1]] = variable[0]
 
-    print(symbol_table)
+    print('Symbol Table: ' + str(symbol_table))
 
     # Perform parsing
     #syntaxAnalyzer.parse(tokens)
