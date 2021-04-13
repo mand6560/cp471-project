@@ -1,4 +1,5 @@
 import sys
+
 import lexer
 import syntaxAnalyzer
 import semantic
@@ -19,17 +20,27 @@ def main():
         with open(source_file_name, 'r') as source_file:
             file_contents = ''
             for line in source_file:
-                file_contents += line.strip()
+                file_contents += line
     except FileNotFoundError:
         print('Error: source file doesn\'t exist')
         sys.exit(1)
 
-    print(file_contents)
+    # Symbol Table creation
+    symbol_table = {}
 
     # Perform lexical analysis
-    tokens, functions, Variables = lexer.scan(file_contents)
+    tokens, functions, variables = lexer.scan(file_contents)
+
+    # Fill out symbol table with results from lexer
+    for function in functions:
+        symbol_table[function[1]] = function[0]
+    for variable in variables:
+        symbol_table[variable[1]] = variable[0]
+
+    print(symbol_table)
+
     # Perform parsing
-    syntaxAnalyzer.parse(tokens)
+    #syntaxAnalyzer.parse(tokens)
     # Perform semantic analysis
     pass
     # Perform backend

@@ -184,4 +184,4 @@ def scan(text):
     return TOKENS, FUNCTION_NAMES, VARIABLES
 
 
-scan(temp)
+#scan(temp)
