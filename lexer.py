@@ -129,10 +129,6 @@ def scan(text):
             # Token is an operator
             elif token in OPERATORS:
                 TOKENS.append(("op", token))
-                
-            # Token is a comparator
-            elif token in COMPARISON:
-                TOKENS.append("comp", token)
 
             # Token is an already defined variable name
             elif token in VARIABLE_NAMES:
@@ -155,7 +151,7 @@ def scan(text):
                 try:
                     float(token)
                     TOKENS.append(("float", token))
-                except:
+                except ValueError:
                     pass
  
             # # If token is a singular bracket
