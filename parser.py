@@ -15,7 +15,7 @@ def parse(tokens):
         
         # Checking if the next value from the input is actually the expected value
         tos = tokens[ind][0]
-        if (tos not in return_vals and return_val.length != 0):
+        if (tos not in return_vals and return_vals.length != 0):
             return -1 
         
         
