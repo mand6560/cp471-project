@@ -30,6 +30,9 @@ def main():
 
     # Perform lexical analysis
     tokens, functions, variables = lexer.scan(file_contents)
+    print("Tokens: {:}\n".format(tokens))
+    print("Functions: {}\n".format(functions))
+    print("Variables: {}\n".format(variables))
 
     # Fill out symbol table with results from lexer
     for function in functions:

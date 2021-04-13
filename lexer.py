@@ -178,9 +178,6 @@ def scan(text):
     VARIABLES = []
     for i in range(len(VARIABLE_NAMES)):
         VARIABLES.append((VARIABLE_TYPES[i], VARIABLE_NAMES[i]))
-    print("Tokens: {:}\n".format(TOKENS))
-    print("Functions: {}\n".format(FUNCTION_NAMES))
-    print("Variables: {}\n".format(VARIABLES))
     return TOKENS, FUNCTION_NAMES, VARIABLES
 
 
