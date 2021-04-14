@@ -3,6 +3,7 @@ import sys
 import lexer
 import syntaxAnalyzer
 import semantic
+import inter
 import backend
 
 
@@ -70,7 +71,9 @@ def main():
         print('Info: semantic analysis completed successfully\n')
 
     # Perform intermediate code generation
-    pass
+    inter.generate(tokens,symbol_table)
+
+    # Backend
 
 
 if __name__ == '__main__':
