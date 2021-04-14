@@ -17,6 +17,12 @@ BRACKETS = ["{", "}", "(", ")","[", "]"]
 OPERATORS = ["+", "-", "/", "*", "="]
 COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
  
+def printSymbol(symbol_table):
+    print('Symbol Table: ')
+    for key in symbol_table.keys():
+        print('%s -> %s' % (key, symbol_table[key]))
+    print()
+
 def scan(text, symbol_table):
     # Split the block of text 
     newText= text.split("\n")
@@ -36,6 +42,8 @@ def scan(text, symbol_table):
     symbolValue = ""
     symbolType = None
     insertSymbol = False
+    updateSymbol = False
+
     for cLine in filterText:
         i+=1
         if cLine == "":
@@ -55,17 +63,30 @@ def scan(text, symbol_table):
         cLine = cLine.split(" ")
         for token in cLine:
             token = token.strip()
-            # print(token)
 
             if insertSymbol == True:
                 # print("_____________________{}".format(token[-1]))
-                if token[-1] == ";":
+                if token[-1] == ";" and updateSymbol == False:
                     symbolValue += " " + token[:-1]
+                    # print(token)
                     symbol_table[symbolEntry] = symbolType, symbolValue.strip()
                     insertSymbol = False
+                    updateSymbol = False
                     symbolValue = ""
                     symbolType = None
+                    # printSymbol(symbol_table)
+                elif token[-1] == ";" and updateSymbol == True:
+                    symbolValue += " " + token[:-1]
+                    # print(token)
+                    symbol_table[symbolEntry] = symbol_table[symbolEntry] + (symbolValue.strip(),)
+                    insertSymbol = False
+                    updateSymbol = False
+                    symbolValue = ""
+                    symbolType = None
+                    # printSymbol(symbol_table)
+
                 else:
+                    # print(token)
                     symbolValue += " " + token
 
             if len(token) != 1:
@@ -131,7 +152,8 @@ def scan(text, symbol_table):
  
             # Previous token toggled variable flag --> Current token is variable name (reset flag)
             elif varBool == True:
-                symbolEntry = token
+                if insertSymbol == False:
+                    symbolEntry = token
                 TOKENS.append(("id", token))
                 varBool = False
                 VARIABLE_NAMES.append(token)
@@ -155,7 +177,11 @@ def scan(text, symbol_table):
             # Token is an already defined variable name
             elif token in VARIABLE_NAMES:
                 TOKENS.append(("id", token))
- 
+                symbolType = symbol_table[token][0] 
+                if insertSymbol == False:
+                    symbolEntry = token
+                    updateSymbol = True
+
             # Token is an already defined function name
             elif token in FUNCTION_NAMES:
                 TOKENS.append(("func_def", token))
