@@ -7,6 +7,9 @@ def generate(tokens,symbol_table):
     #   +  |  t1  |  1   | t2
     #  ret |  t2  |  -   |    
     var_count = 1
+
+    # To get from symbol value
+    value_dic = {}
     var_maps = {}
     quadruples = []
     insert_flag = False
@@ -19,6 +22,7 @@ def generate(tokens,symbol_table):
             insert_flag = True
         elif (op == "ret" and curr_token[0] == "id"):
             quadruples.append((op,var_maps[curr_token[1]],"",""))
+        # elif (curr_token[0])
         elif (curr_token[0] == "id" and insert_flag):
             op = "="
             # print(curr_token[1])
@@ -34,26 +38,35 @@ def generate(tokens,symbol_table):
                 # print("D:")
             else:
                 inter_var = var_maps[curr_token[1]]
+            
+            var_maps[curr_token[1]] = inter_var
+            if (curr_token in value_dic):
+                value_dic[curr_token[1]] += 1
+            else:
+                value_dic[curr_token[1]] = 1
+                
+
             curr_val = symbol_table[curr_token[1]]
 
-            if ("+" in curr_val[1]):
+            if ("+" in curr_val[value_dic[curr_token[1]]]):
                 op = "+"
-            elif ("-" in curr_val[1]):
+            elif ("-" in curr_val[value_dic[curr_token[1]]]):
                 op = "-"
-            elif ("*" in curr_val[1]):
+            elif ("*" in curr_val[value_dic[curr_token[1]]]):
                 op = "*"
-            elif ("/" in curr_val[1]):
+            elif ("/" in curr_val[value_dic[curr_token[1]]]):
                 op = "/"
             
             if (len(curr_val[1].strip("")) == 1):
-                arg1 = curr_val[1]
+                arg1 = curr_val[value_dic[curr_token[1]]]
                 arg2 = ""
             else:
-                val_list = curr_val[1].strip("").split(" ")
+                # What we got from the symbol table
+                val_list = curr_val[value_dic[curr_token[1]]].strip("").split(" ")
                 arg1 = var_maps[val_list[0]]
                 arg2 = val_list[-1]
             
-            var_maps[curr_token[1]] = inter_var
+            
             quadruples.append((op,arg1,arg2,inter_var))
             var_count += 1
             # print(var_maps,curr_token)
