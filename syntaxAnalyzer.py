@@ -17,7 +17,7 @@ def parse(tokens):
         
         # Checking if the next value from the input is actually the expected value
         tos = tokens[ind][0]
-        if (tos == "id" or tos == "fun_decl") and tokens[ind][1][0] not in string.ascii_letters and tokens[ind][1][0] != "_":
+        if (tos == "id" or tos == "func_decl") and tokens[ind][1][0] not in string.ascii_letters and tokens[ind][1][0] != "_":
             return -1
 
         print(toi,tos,return_vals)
