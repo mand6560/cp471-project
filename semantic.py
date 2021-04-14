@@ -47,7 +47,7 @@ def checker(tokens, symbol_table):
                 except ValueError:
                     return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
                 except KeyError:
-                    print(symbol_table[value],char,symbol_table)
+                    print(symbol_table[value], char, symbol_table)
                     return "Error: Oops something broke... It is what it is 2"
 
             elif symbol_table[value][1] == "float":

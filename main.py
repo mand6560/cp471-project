@@ -58,9 +58,12 @@ def main():
         sys.exit(1)
     
     # Perform semantic analysis
-    print(semantic.checker(tokens,symbol_table))
-    pass
-    # Perform backend
+    semantic_result = semantic.checker(tokens, symbol_table)
+    if semantic_result != 1:
+        print(semantic_result)
+        sys.exit(1)
+
+    # Perform intermediate code generation
     pass
 
 
