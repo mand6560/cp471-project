@@ -1,4 +1,7 @@
+COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
+
 def generate(tokens,symbol_table):
+    
     final_string = ""
     # triples = {}
 
@@ -15,7 +18,9 @@ def generate(tokens,symbol_table):
     quadruples = []
     while_insert_flag = False
     op = ""
-    for i in range (len(tokens)):
+    i = 0
+    while i < (len(tokens)):
+        print(i)
     # for curr_token in tokens:
         curr_token = tokens[i]
 
@@ -23,17 +28,17 @@ def generate(tokens,symbol_table):
             final_string += curr_token[1]+":\n"
 
         elif (curr_token[0] == "while_loop"):
-            quadruples.append(("while","label{}:".format(label_count),"",""))
+            quadruples.append(("while","","","label{}:".format(label_count)))
+            quadruples.append( (tokens[i+3][1], var_maps[tokens[i+2][1]], tokens[i+4][1],"END" ) )
+            i += 3
             label_count += 1
             while_insert_flag = True
-        
-
-
         # elif while_insert_flag == True:
         #     if curr_token[0] == "bracket" and curr_token[1] == "}":
                 
 
         elif (op == "ret" and curr_token[0] == "id"):
+            quadruples.append(("while","","","END:"))
             quadruples.append((op,var_maps[curr_token[1]],"",""))
         # elif (curr_token[0])
         elif (curr_token[0] == "id"):
@@ -90,16 +95,19 @@ def generate(tokens,symbol_table):
                 op = ""
         elif(curr_token[0] == "RTRN_STMT"):
             op = "ret"
+        i += 1
     for entry in quadruples:
         if (entry[0] == "="):
             final_string += entry[3] + " " + entry[0] + " "+entry[1]+"\n"
         elif (entry[0] == "ret"):
             final_string += "return " + entry[1] + "\n"
         elif (entry[0] == "while"):
-            final_string += entry[1] + "\n"
+            final_string += entry[3] + "\n"
+        elif(entry[0] in COMPARISON):
+            final_string += "if " + entry[1] + " " + entry[0] + " " + entry[2] + " goto " + entry[3] + "\n"
         else:
             final_string += entry[3] +  " = " + entry[1]+" " + entry[0] + " " + entry[2]+"\n"
-        
+    
 
     print(final_string)
     print(quadruples)
