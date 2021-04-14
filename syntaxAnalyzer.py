@@ -1,3 +1,5 @@
+import string
+
 def parse(tokens):
     #tokens is a list of tokens, where the elements take the format <identifier,type>
     #Walk through the list given to us
@@ -15,6 +17,9 @@ def parse(tokens):
         
         # Checking if the next value from the input is actually the expected value
         tos = tokens[ind][0]
+        if (tos == "id" or tos == "fun_decl") and tokens[ind][1][0] not in string.ascii_letters and tokens[ind][1][0] != "_":
+            return -1
+
         print(toi,tos,return_vals)
         print("---> {}".format(tokens[ind]))
         if (return_vals != None and tos not in return_vals and len(return_vals) != 0):
