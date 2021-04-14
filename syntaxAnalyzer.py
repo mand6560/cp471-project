@@ -20,8 +20,8 @@ def parse(tokens):
         if (tos == "id" or tos == "func_decl") and tokens[ind][1][0] not in string.ascii_letters and tokens[ind][1][0] != "_":
             return -1
 
-        print(toi,tos,return_vals)
-        print("---> {}".format(tokens[ind]))
+        # print(toi,tos,return_vals)
+        # print("---> {}".format(tokens[ind]))
         if (return_vals != None and tos not in return_vals and len(return_vals) != 0):
             return -1 
         

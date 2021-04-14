@@ -4,5 +4,6 @@ func main {
 	while (x < 3) {
 		y = y + 2;
 	}
+
 	return y;
 }

@@ -56,8 +56,9 @@ def main():
     if parsing_result == -1:
         print('Error: parsing error, check your code and try again...')
         sys.exit(1)
-
+    
     # Perform semantic analysis
+    print(semantic.checker(tokens,symbol_table))
     pass
     # Perform backend
     pass

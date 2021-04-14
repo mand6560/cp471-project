@@ -33,7 +33,8 @@ def checker(tokens, symbol_table):
             return "Error: {}, token not a valid function declaration".format(SEMANTIC_ERROR)
 
         elif classify == "id":
-            symbolVal = symbol_table[value][0].split(" ")
+            symbolVal = symbol_table[value][0].strip(" ").split(" ")
+
             if symbol_table[value][1] == "int":
                 try:
                     for char in symbolVal:
@@ -42,11 +43,12 @@ def checker(tokens, symbol_table):
                         elif char.isdigit():
                             int(char)
                         elif symbol_table[char][1] != "int":
-                            return "Error: Oops something broke... It is what it is"
+                            return "Error: Oops something broke... It is what it is 1"
                 except ValueError:
                     return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
                 except KeyError:
-                    return "Error: Oops something broke... It is what it is"
+                    print(symbol_table[value],char,symbol_table)
+                    return "Error: Oops something broke... It is what it is 2"
 
             elif symbol_table[value][1] == "float":
                 try:
@@ -56,15 +58,15 @@ def checker(tokens, symbol_table):
                         elif '.' in char:
                             float(char)
                         elif symbol_table[char][1] != "float":
-                            return "Error: Oops something broke... It is what it is"
+                            return "Error: Oops something broke... It is what it is 3"
                 except ValueError:
                     return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
                 except KeyError:
-                    return "Error: Oops something broke... It is what it is"
+                    return "Error: Oops something broke... It is what it is 4"
 
             elif symbol_table[value][1] == "string":
                 if type(symbol_table[value][0]) != str:
-                    return "Error: Oops something broke... It is what it is"
+                    return "Error: Oops something broke... It is what it is 5"
 
             elif symbol_table[value][1] == "bool":
                 try:
@@ -72,11 +74,12 @@ def checker(tokens, symbol_table):
                         if char in OPERATORS:
                             pass
                         elif char != "true" and char != "false":
-                            return "Error: Oops something broke... It is what it is"
+                            return "Error: Oops something broke... It is what it is 6"
                         elif symbol_table[char][1] != "bool":
-                            return "Error: Oops something broke... It is what it is"
+                            return "Error: Oops something broke... It is what it is 7"
                 except ValueError:
                     return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
                 except KeyError:
-                    return "Error: Oops something broke... It is what it is"
+                    return "Error: Oops something broke... It is what it is 8"
+    return 1
 
