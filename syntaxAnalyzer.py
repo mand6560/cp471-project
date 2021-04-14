@@ -35,7 +35,7 @@ def parse_aux(toi):
         return {"func_def"} 
     
     elif toi ==  "func_def": 
-        return {"id"}
+        return {"func_decl"}
           
     
     elif toi ==  "id": 
@@ -65,6 +65,9 @@ def parse_aux(toi):
     
     elif toi == "RTRN_STMT":
         return {"id"}
+
+    elif toi == "func_decl":
+        return {"bracket"}
           
     
     # elif toi == "=": 

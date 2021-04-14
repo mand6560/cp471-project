@@ -61,7 +61,6 @@ def scan(text, symbol_table):
                 # print("_____________________{}".format(token[-1]))
                 if token[-1] == ";":
                     symbolValue += " " + token[:-1]
-                    print("_____________________{}".format(symbolValue))
                     symbol_table[symbolEntry] = symbolValue, symbolType
                     insertSymbol = False
                     symbolValue = ""
@@ -126,7 +125,7 @@ def scan(text, symbol_table):
  
             # Previous token toggled Function flag --> Current token is function name (reset flag)
             elif funcBool == True:
-                TOKENS.append(("id", token))
+                TOKENS.append(("func_decl", token))
                 FUNCTION_NAMES.append(("PROC", token))
                 funcBool = False
  
@@ -151,7 +150,6 @@ def scan(text, symbol_table):
                 TOKENS.append(("op", token))
                 
                 if token == "=":
-                    print("+++++++++++++++{}".format(token))
                     insertSymbol = True
 
             # Token is an already defined variable name
@@ -193,7 +191,6 @@ def scan(text, symbol_table):
                 TOKENS.append(("bracket", endVal))
                 endBracket = False
 
-    print("~~~~~~~~~~~~~~~~~~~~{}".format(symbol_table))
     return TOKENS, symbol_table
 
 
