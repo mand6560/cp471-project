@@ -1,16 +1,24 @@
 def checker(tokens, symbol_table):
-    BRACKETS = ["{", "}", "(", ")","[", "]"]
     OPERATORS = ["+", "-", "/", "*", "="]
     COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
 
     SEMANTIC_ERROR = "Semantic Eror"
 
+    bracketStack = []
+    openBracket = ["{", "(", "["]
+    closeBracket = ["}", ")", "]"]
+
     for tok in tokens:
         classify = tok[0]
         value = tok[1]
 
-        if classify == "bracket" and value not in BRACKETS:
-            return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
+        if classify == "bracket":
+            if value in openBracket:
+                bracketStack.append(value)
+            else:
+                temp = bracketStack.pop()
+                if closeBracket[openBracket.index(temp)] != value:
+                    return "Error: {}, token not a bracket".format(SEMANTIC_ERROR)
 
         elif classify == "op" and value not in OPERATORS:
             return "Error: {}, token not a valid operation".format(SEMANTIC_ERROR)
