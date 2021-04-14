@@ -36,7 +36,9 @@ def main():
         sys.exit(1)
     else:
         tokens, symbol_table = lexer_results
-    print("Tokens: {}".format(tokens))
+
+    print('Info: lexing completed successfully\n')
+    print("Tokens: {}\n".format(tokens))
     # print("Functions: {}".format(functions))
     # print("Variables: {}".format(variables))
 
@@ -49,6 +51,7 @@ def main():
     print('Symbol Table: ')
     for key in symbol_table.keys():
         print('%s -> %s' % (key, symbol_table[key]))
+    print()
 
     # Perform parsing
     parsing_result = syntaxAnalyzer.parse(tokens)
@@ -56,12 +59,15 @@ def main():
     if parsing_result == -1:
         print('Error: parsing error, check your code and try again...')
         sys.exit(1)
-    
+    else:
+        print('Info: parsing completed successfully\n')
     # Perform semantic analysis
     semantic_result = semantic.checker(tokens, symbol_table)
     if semantic_result != 1:
         print(semantic_result)
         sys.exit(1)
+    else:
+        print('Info: semantic analysis completed successfully\n')
 
     # Perform intermediate code generation
     pass
