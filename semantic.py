@@ -2,7 +2,7 @@ def checker(tokens, symbol_table):
     OPERATORS = ["+", "-", "/", "*", "="]
     COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
 
-    SEMANTIC_ERROR = "Semantic Eror"
+    SEMANTIC_ERROR = "Semantic Error"
 
     bracketStack = []
     openBracket = ["{", "(", "["]
