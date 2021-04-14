@@ -61,7 +61,7 @@ def scan(text, symbol_table):
                 # print("_____________________{}".format(token[-1]))
                 if token[-1] == ";":
                     symbolValue += " " + token[:-1]
-                    symbol_table[symbolEntry] = symbolValue, symbolType
+                    symbol_table[symbolEntry] = symbolType, symbolValue.strip()
                     insertSymbol = False
                     symbolValue = ""
                     symbolType = None
