@@ -49,9 +49,9 @@ def generate(tokens,symbol_table):
         elif (op == "ret" and curr_token[0] == "id"):
             if logic_Flag == False:
                 quadruples.append((op,var_maps[curr_token[1]],"",""))
-                quadruples.append(("label","","","END{}".format(end_count)))
+                quadruples.append(("label","","","END{}:".format(end_count)))
             else:
-                quadruples.append(("label","","","END{}".format(end_count)))
+                quadruples.append(("label","","","END{}:".format(end_count)))
                 quadruples.append((op,var_maps[curr_token[1]],"",""))
             logic_Flag == False
             end_count += 1
