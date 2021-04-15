@@ -73,10 +73,10 @@ def main():
     # Perform intermediate code generation
     print('Intermediate Code:')
     inter_code = inter.generate(tokens,symbol_table)
-
     print(inter_code)
-
+    
     # Backend
+    backend.generate(inter_code)
 
 
 if __name__ == '__main__':
