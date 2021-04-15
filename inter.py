@@ -124,8 +124,6 @@ def generate(tokens,symbol_table):
                         value_dic[curr_token[1]] += 1
                 
                     # print(curr_token[1],value_dic[curr_token[1]])
-                if(inter_var == "t2"):
-                    print(tokens[i-1])
                 quadruples.append((op,arg1,arg2,inter_var))
                 # print(quadruples)
                 var_count += 1
@@ -157,5 +155,5 @@ def generate(tokens,symbol_table):
     if ("END" in final_string.split("\n")[-2] ):
         final_string = "\n".join(final_string.split("\n")[:-2])
     # print(quadruples)
-    print(final_string)
+    # print(final_string)
     return final_string

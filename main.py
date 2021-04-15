@@ -71,7 +71,10 @@ def main():
         print('Info: semantic analysis completed successfully\n')
 
     # Perform intermediate code generation
-    inter.generate(tokens,symbol_table)
+    print('Intermediate Code:')
+    inter_code = inter.generate(tokens,symbol_table)
+
+    print(inter_code)
 
     # Backend
 
