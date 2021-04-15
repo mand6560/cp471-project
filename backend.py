@@ -1,5 +1,19 @@
 def generate(inter_code):
-    inter_code_arr = inter_code.strip("\n").split("\n")
+    pre_inter_code_arr = inter_code.strip("\n").split("\n")
+    inter_code_arr = []
+
+    i = 0
+    while i < len(pre_inter_code_arr):
+        if pre_inter_code_arr[i][-1] == ':':
+            new_line = pre_inter_code_arr[i] + ' ' + pre_inter_code_arr[i + 1]
+            inter_code_arr.append(new_line)
+            i += 1
+        else:
+            inter_code_arr.append(pre_inter_code_arr[i])
+        i += 1
+
+    print('\n'.join(inter_code_arr))
+
     register_count = 0
     final_string = "L1:\n"
     
