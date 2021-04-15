@@ -20,7 +20,7 @@ def generate(tokens,symbol_table):
     op = ""
     i = 0
     while i < (len(tokens)):
-        print(i)
+        # print(i)
     # for curr_token in tokens:
         curr_token = tokens[i]
 
@@ -61,9 +61,12 @@ def generate(tokens,symbol_table):
                     inter_var = var_maps[curr_token[1]]
                 
                 var_maps[curr_token[1]] = inter_var
+                # print(curr_token, value_dic, quadruples)
                 if (curr_token[1] in value_dic):
                     value_dic[curr_token[1]] += 1
+                    # print("increasing value_dic")
                 else:
+                    # print("setting value_dic")
                     value_dic[curr_token[1]] = 1
                     
 
@@ -78,21 +81,30 @@ def generate(tokens,symbol_table):
                 elif ("/" in curr_val[value_dic[curr_token[1]]]):
                     op = "/"
                 
-                if (len(curr_val[1].strip("")) == 1):
+                # print("curr_val: ",curr_val[value_dic[curr_token[1]]])
+                # print("len: ",len(curr_val[value_dic[curr_token[1]]].strip("")))
+                
+                # We must split
+                if (len(curr_val[value_dic[curr_token[1]]].strip("").split(" ")) == 1):
                     arg1 = curr_val[value_dic[curr_token[1]]]
                     arg2 = ""
                 else:
                     # What we got from the symbol table
                     val_list = curr_val[value_dic[curr_token[1]]].strip("").split(" ")
+                    # print("curr_val: ",curr_val)
+                    # print("value_dic: ",value_dic)
+                    # print("curr_token[1]: ", curr_token[1])
+                    # print("curr_val[value_dic[curr_token[1]]]: ",curr_val[value_dic[curr_token[1]]])
                     arg1 = var_maps[val_list[0]]
                     arg2 = val_list[-1]
                 
                 
                 quadruples.append((op,arg1,arg2,inter_var))
-                print(quadruples)
+                # print(quadruples)
                 var_count += 1
                 # print(var_maps,curr_token)
                 op = ""
+                print(quadruples)
         elif(curr_token[0] == "RTRN_STMT"):
             op = "ret"
         i += 1
@@ -108,7 +120,7 @@ def generate(tokens,symbol_table):
         else:
             final_string += entry[3] +  " = " + entry[1]+" " + entry[0] + " " + entry[2]+"\n"
     
-
-    print(final_string)
+    
     print(quadruples)
+    print(final_string)
     return final_string
