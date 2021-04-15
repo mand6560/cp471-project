@@ -1,6 +1,5 @@
 def generate(inter_code):
-    inter_code_arr = inter_code.split("\n")
-
+    inter_code_arr = inter_code.strip("\n").split("\n")
     register_count = 0
     final_string = "L1:\n"
     
@@ -32,7 +31,7 @@ def generate(inter_code):
             
 
         i += 1
-    # print(final_string)
+    
     print(get_basic_blocks(inter_code_arr))
     return None
 
@@ -58,10 +57,20 @@ def get_basic_blocks(inter_code_arr):
         curr = inter_code_arr[i].strip(" ").split(" ")
         # print("curr: ",curr)
         if (len(curr) == 2 and "goto" in (curr)):
-            leaders.append(inter_code_arr.index(curr[-1]+":"))    
+            # print("leaders1: ",leaders)
+            leaders = leaders[:leaders.index(inter_code_arr.index(curr[-1]+":"))+1]
+            # print("leaders2: ",leaders)
+        else:
+            leaders.append(i)
+            # leaders.append()    
         # Any instruction that follows a jump/ goto
         if (prev != None and len(prev) == 2 and "goto" in (prev)):
-            leaders.append(i)
+            if (i not in leaders):
+                leaders.append(i)
+        
         prev = curr
+    # Getting rid of the return statement
+    leaders = leaders[:-1]
     print("leaders: ",leaders)
+    
     return basic_blocks
