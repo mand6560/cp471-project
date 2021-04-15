@@ -70,18 +70,11 @@ def get_basic_blocks(inter_code_arr):
         # Any instruction that is the target of a jump
         curr = inter_code_arr[i].strip(" ").split(" ")
         # print("curr: ",curr)
-        if (len(curr) == 2 and "goto" in (curr)):
-            print("leaders1: ",leaders)
-            print(curr)
-            # leaders = leaders[:leaders.index(inter_code_arr.index(curr[-1]+":"))+1]
-            
-            for j in range(len(inter_code_arr)):
-                if ((curr[-1]+":") in inter_code_arr[j]):
-                    leaders = leaders[:j]
-                    break
-            # print("leaders2: ",leaders)
-        else:
+        if (":" in curr[0]):
             leaders.append(i)
+            
+            # print("leaders2: ",leaders)
+        
             # leaders.append()    
         # Any instruction that follows a jump/ goto
         if (prev != None and len(prev) == 2 and "goto" in (prev)):
