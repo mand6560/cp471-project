@@ -72,5 +72,26 @@ def get_basic_blocks(inter_code_arr):
     # Getting rid of the return statement
     leaders = leaders[:-1]
     print("leaders: ",leaders)
-    
+
+    # basic_blocks = []
+    temp = [inter_code_arr[1]]
+    curr = 1
+    for i in range(2, len(inter_code_arr)):
+
+        if curr == len(leaders):
+            temp.append(inter_code_arr[i])
+
+        elif i == leaders[curr]:
+            basic_blocks.append(temp)
+            temp = []
+            temp.append(inter_code_arr[i])
+            curr += 1
+
+        else :
+            temp.append(inter_code_arr[i])
+            # temp = []
+
+    basic_blocks.append(temp)
+
+    print(basic_blocks)
     return basic_blocks
