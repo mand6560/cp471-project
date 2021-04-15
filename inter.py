@@ -153,7 +153,9 @@ def generate(tokens,symbol_table):
         else:
             final_string += entry[3] +  " = " + entry[1]+" " + entry[0] + " " + entry[2]+"\n"
     
-    
-    print(quadruples)
+    # print("final_string: ",final_string.split("\n")[-2])
+    if ("END" in final_string.split("\n")[-2] ):
+        final_string = "\n".join(final_string.split("\n")[:-2])
+    # print(quadruples)
     print(final_string)
     return final_string
