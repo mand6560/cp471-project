@@ -156,4 +156,17 @@ def generate(tokens,symbol_table):
         final_string = "\n".join(final_string.split("\n")[:-2])
     # print(quadruples)
     # print(final_string)
-    return final_string
+
+    pre_inter_code_arr = final_string.strip("\n").split("\n")
+    inter_code_arr = []
+
+    i = 0
+    while i < len(pre_inter_code_arr):
+        if pre_inter_code_arr[i][-1] == ':':
+            new_line = pre_inter_code_arr[i] + ' ' + pre_inter_code_arr[i + 1]
+            inter_code_arr.append(new_line)
+            i += 1
+        else:
+            inter_code_arr.append(pre_inter_code_arr[i])
+        i += 1
+    return '\n'.join(inter_code_arr)

@@ -12,7 +12,7 @@ def generate(inter_code):
             inter_code_arr.append(pre_inter_code_arr[i])
         i += 1
 
-    print('\n'.join(inter_code_arr))
+    # print('\n'.join(inter_code_arr))
 
     register_count = 0
     final_string = "L1:\n"
@@ -71,8 +71,14 @@ def get_basic_blocks(inter_code_arr):
         curr = inter_code_arr[i].strip(" ").split(" ")
         # print("curr: ",curr)
         if (len(curr) == 2 and "goto" in (curr)):
-            # print("leaders1: ",leaders)
-            leaders = leaders[:leaders.index(inter_code_arr.index(curr[-1]+":"))+1]
+            print("leaders1: ",leaders)
+            print(curr)
+            # leaders = leaders[:leaders.index(inter_code_arr.index(curr[-1]+":"))+1]
+            
+            for j in range(len(inter_code_arr)):
+                if ((curr[-1]+":") in inter_code_arr[j]):
+                    leaders = leaders[:j]
+                    break
             # print("leaders2: ",leaders)
         else:
             leaders.append(i)
@@ -84,13 +90,13 @@ def get_basic_blocks(inter_code_arr):
         
         prev = curr
     # Getting rid of the return statement
-    leaders = leaders[:-1]
+    # leaders = leaders[:-1]
     print("leaders: ",leaders)
 
     # basic_blocks = []
-    temp = [inter_code_arr[1]]
+    temp = []
     curr = 1
-    for i in range(2, len(inter_code_arr)):
+    for i in range(0, len(inter_code_arr)):
 
         if curr == len(leaders):
             temp.append(inter_code_arr[i])
