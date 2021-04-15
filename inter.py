@@ -2,7 +2,7 @@ COMPARISON = ["==", "<", ">", ">=", "<=", "!="]
 ANTI_COMPARISON = ["!=", ">=", "<=", "<", ">", "=="]
 
 def generate(tokens,symbol_table):
-    print(tokens[24])
+    # print(tokens[24])
     final_string = ""
     # triples = {}
 
@@ -19,9 +19,10 @@ def generate(tokens,symbol_table):
     quadruples = []
     while_insert_flag = False
     eq_flag = False
+    end_count = 1
     op = ""
     i = 0
-    while i < (len(tokens)):
+    while i < (len(tokens)-1):
 
         curr_token = tokens[i]
 
@@ -30,15 +31,24 @@ def generate(tokens,symbol_table):
 
         elif (curr_token[0] == "while_loop"):
             quadruples.append(("while","","","label{}:".format(label_count)))
-            quadruples.append( (tokens[i+3][1], var_maps[tokens[i+2][1]], tokens[i+4][1],"END" ) )
+            quadruples.append( (tokens[i+3][1], var_maps[tokens[i+2][1]], tokens[i+4][1],"END{}".format(end_count) ) )
             i += 3
-            label_count += 1
             while_insert_flag = True
-         
+        elif (curr_token[0] == "cond" and curr_token[1] != "else"):
+            # quadruples.append((curr_token[1],"","","label{}:".format(label_count)))
+            quadruples.append( (tokens[i+3][1], var_maps[tokens[i+2][1]], var_maps[tokens[i+4][1]],"END{}".format(end_count) ) )
+            i += 3
+        elif (curr_token[1] == "}" and while_insert_flag):
+            # quadruples.append((curr_token[1],"","","label{}:".format(label_count)))
+            quadruples.append( ("goto", "","","label{}".format(label_count) ) )
+            label_count += 1
+            while_insert_flag = False
 
         elif (op == "ret" and curr_token[0] == "id"):
-            quadruples.append(("label","","","END:"))
+            
             quadruples.append((op,var_maps[curr_token[1]],"",""))
+            quadruples.append(("label","","","END{}".format(end_count)))
+            end_count += 1
             op = ""
         # elif (curr_token[0])
         elif (curr_token[0] == "id" and tokens[i-1][0] != "comp"):
@@ -131,6 +141,9 @@ def generate(tokens,symbol_table):
             final_string += entry[3] + "\n"
         elif(entry[0] in COMPARISON):
             final_string += "if " + entry[1] + " " + ANTI_COMPARISON[COMPARISON.index(entry[0])] + " " + entry[2] + " goto " + entry[3] + "\n"
+        elif(entry[0] == "goto"):
+            final_string += entry[0] + " " + entry[3] +" \n"
+        # elif(entry[0] in)
         else:
             final_string += entry[3] +  " = " + entry[1]+" " + entry[0] + " " + entry[2]+"\n"
     
