@@ -45,7 +45,7 @@ def generate(inter_code):
         #         basic_blocks[k].insert(element)
         #     print("temp: ", temp)
 
-    print(basic_blocks)
+    # print(basic_blocks)
 
     for i in range(len(basic_blocks)):
         for j in range(len(basic_blocks[i])):
@@ -74,16 +74,23 @@ def generate(inter_code):
             elif ("return" in curr_instr[0]):
                 final_string += "ST {},{}".format("RESULT",
                                                   register_map[curr_instr[1]]) + "\n"
+            elif ("goto" in curr_instr[0]):
+                final_string += "B "+curr_instr[1] +"\n"
             elif("if" in curr_instr[0]):
                 # t3 = t2-t1
                 arg1 = curr_instr[1]
+
                 arg2 = curr_instr[3]
+                if not(arg2.isdigit()):
+                    arg2 = register_map[arg2]
+                else:
+                    arg2 = "#"+arg2
                 final_string += "LD " + \
                     "R{},{}".format(len(register_map)+1,
                                     register_map[arg1])+"\n"
                 final_string += "LD " + \
                     "R{},{}".format(len(register_map)+2,
-                                    register_map[arg2])+"\n"
+                                    arg2)+"\n"
                 final_string += "SUB " + \
                     "R{},R{},R{}".format(
                         len(register_map)+1, len(register_map)+1, len(register_map)+2) + "\n"
@@ -94,6 +101,7 @@ def generate(inter_code):
                 if (curr_instr[2] == ">="):
                     final_string += "BGE R{},R{},{}".format(
                         len(register_map)+1, len(register_map)+2, curr_instr[-1] + "\n")
+                # elif ("")
 
             elif(curr_instr[1] == "="):
 
