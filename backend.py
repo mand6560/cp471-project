@@ -16,7 +16,7 @@ def generate(inter_code):
 
     register_count = 0
     final_string = "L1:\n"
-    
+
     i = 1
     register_map = {}
 
@@ -32,7 +32,8 @@ def generate(inter_code):
                     # print(curr_instr)
                     register_map[curr_instr[0]] = "R{}".format(register_count)
                     register_count += 1
-                final_string += "LD " + register_map[curr_instr[0]] + "," + curr_instr[2] + "\n"
+                final_string += "LD " + \
+                    register_map[curr_instr[0]] + "," + curr_instr[2] + "\n"
             elif(curr_instr[1] == "+="):
                 pass
             elif(curr_instr[1] == "-="):
@@ -42,18 +43,19 @@ def generate(inter_code):
             elif(curr_instr[1] == "/="):
                 pass
         # elif (len(curr_instr) == 4):
-            
 
         i += 1
-    
+
     print(get_basic_blocks(inter_code_arr))
     return None
 
 # Used to identify leaders and generate the basic blocks
+
+
 def get_basic_blocks(inter_code_arr):
     basic_blocks = []
     curr_block = []
-    leaders= []
+    leaders = []
 
     # Holds the positions of the labels in the code
     label_positions = {}
@@ -66,15 +68,15 @@ def get_basic_blocks(inter_code_arr):
     curr = None
 
     # print(inter_code_arr)
-    for i in range(2,len(inter_code_arr)):
+    for i in range(2, len(inter_code_arr)):
         # Any instruction that is the target of a jump
         curr = inter_code_arr[i].strip(" ").split(" ")
         # print("curr: ",curr)
         if (len(curr) == 2 and "goto" in (curr)):
-            print("leaders1: ",leaders)
+            print("leaders1: ", leaders)
             print(curr)
             # leaders = leaders[:leaders.index(inter_code_arr.index(curr[-1]+":"))+1]
-            
+
             for j in range(len(inter_code_arr)):
                 if ((curr[-1]+":") in inter_code_arr[j]):
                     leaders = leaders[:j]
@@ -82,20 +84,20 @@ def get_basic_blocks(inter_code_arr):
             # print("leaders2: ",leaders)
         else:
             leaders.append(i)
-            # leaders.append()    
+            # leaders.append()
         # Any instruction that follows a jump/ goto
         if (prev != None and len(prev) == 2 and "goto" in (prev)):
             if (i not in leaders):
                 leaders.append(i)
-        
+
         prev = curr
     # Getting rid of the return statement
     # leaders = leaders[:-1]
-    print("leaders: ",leaders)
+    print("leaders: ", leaders)
 
     # basic_blocks = []
     temp = []
-    curr = 1
+    curr = 0
     for i in range(0, len(inter_code_arr)):
 
         if curr == len(leaders):
@@ -107,11 +109,11 @@ def get_basic_blocks(inter_code_arr):
             temp.append(inter_code_arr[i])
             curr += 1
 
-        else :
+        else:
             temp.append(inter_code_arr[i])
             # temp = []
 
-    basic_blocks.append(temp)
+    basic_blocks[-1] = basic_blocks[-1] + temp
 
     print(basic_blocks)
     return basic_blocks
