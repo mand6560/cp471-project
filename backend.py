@@ -149,7 +149,7 @@ def generate(inter_code):
         space_str = ""
     print("final_string:\n"+final_string)
 
-    return None
+    return final_string
 
 # Used to identify leaders and generate the basic blocks
 
