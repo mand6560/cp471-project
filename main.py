@@ -73,11 +73,17 @@ def main():
     # Perform intermediate code generation
     print('Intermediate Code:')
     inter_code = inter.generate(tokens,symbol_table)
+    print()
     print(inter_code)
+    print()
+    print('Info: Intermediate Code was generated successfully\n')
     
     # Backend
-    backend.generate(inter_code)
-
+    assembly_code = backend.generate(inter_code)
+    print('Assembly Code:')
+    print()
+    print(assembly_code)
+    print('Info: Assembly Code was generated successfully\n')
 
 if __name__ == '__main__':
     main()
