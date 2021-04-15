@@ -19,6 +19,7 @@ def generate(tokens,symbol_table):
     quadruples = []
     while_insert_flag = False
     eq_flag = False
+    logic_Flag = False
     end_count = 1
     op = ""
     i = 0
@@ -43,11 +44,16 @@ def generate(tokens,symbol_table):
             quadruples.append( ("goto", "","","label{}".format(label_count) ) )
             label_count += 1
             while_insert_flag = False
+            logic_Flag = True
 
         elif (op == "ret" and curr_token[0] == "id"):
-            
-            quadruples.append((op,var_maps[curr_token[1]],"",""))
-            quadruples.append(("label","","","END{}".format(end_count)))
+            if logic_Flag == False:
+                quadruples.append((op,var_maps[curr_token[1]],"",""))
+                quadruples.append(("label","","","END{}".format(end_count)))
+            else:
+                quadruples.append(("label","","","END{}".format(end_count)))
+                quadruples.append((op,var_maps[curr_token[1]],"",""))
+            logic_Flag == False
             end_count += 1
             op = ""
         # elif (curr_token[0])
