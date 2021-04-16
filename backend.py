@@ -19,10 +19,10 @@ def generate(inter_code):
     register_count = 1
     register_map = {}
     # Registor desc = {"R0":("t71","t43",...),..."RN":("t8","t32",...)}
-    registor_descriptor = {}
+    # registor_descriptor = {}
 
     # Address dec = {"t1":"R0",...,"tn":"x"}
-    address_descriptor = {}
+    # address_descriptor = {}
 
     basic_blocks = get_basic_blocks(inter_code_arr)
     # print(basic_blocks)
@@ -75,7 +75,7 @@ def generate(inter_code):
                 final_string += "ST {},{}".format("RESULT",
                                                   register_map[curr_instr[1]]) + "\n"
             elif ("goto" in curr_instr[0]):
-                final_string += "B "+curr_instr[1] +"\n"
+                final_string += "B "+curr_instr[1] + "\n"
             elif("if" in curr_instr[0]):
                 # t3 = t2-t1
                 arg1 = curr_instr[1]
@@ -110,8 +110,7 @@ def generate(inter_code):
                 if (curr_instr[2] == ">"):
                     final_string += "BGT R{},R{},{}".format(
                         len(register_map)+1, len(register_map)+2, curr_instr[-1] + "\n")
-                
-                
+
                 # elif ("")
 
             elif(curr_instr[1] == "="):
@@ -167,17 +166,17 @@ def generate(inter_code):
 
 def get_basic_blocks(inter_code_arr):
     basic_blocks = []
-    curr_block = []
+    # curr_block = []
     leaders = []
 
     # Holds the positions of the labels in the code
-    label_positions = {}
+    # label_positions = {}
 
     # We dont want label, we just want the first 3AC instr
     leaders.append(0)
 
     # Now we find the leaders using the other definitions for leaders
-    prev = None
+    prev = []
     curr = None
 
     # print(inter_code_arr)
@@ -193,7 +192,7 @@ def get_basic_blocks(inter_code_arr):
 
             # leaders.append()
         # Any instruction that follows a jump/ goto
-        if (prev != None and "goto" in (prev)):
+        if (prev != [] and "goto" in (prev)):
             # if (i not in leaders):
             leaders.append(i)
 

@@ -33,7 +33,8 @@ def main():
     lexer_results = lexer.scan(file_contents, symbol_table)
     # Check for lexer error condition
     if lexer_results[0] == 'error':
-        print('Error: lexer error, invalid token %s detected...' % lexer_results[1])
+        print('Error: lexer error, invalid token %s detected...' %
+              lexer_results[1])
         sys.exit(1)
     else:
         tokens, symbol_table = lexer_results
@@ -72,12 +73,12 @@ def main():
 
     # Perform intermediate code generation
     print('Intermediate Code:')
-    inter_code = inter.generate(tokens,symbol_table)
+    inter_code = inter.generate(tokens, symbol_table)
     print()
     print(inter_code)
     print()
     print('Info: Intermediate Code was generated successfully\n')
-    
+
     # Backend
     assembly_code = backend.generate(inter_code)
     print('Assembly Code:')
@@ -88,6 +89,7 @@ def main():
     # Write assembly code to executable file
     with open('a.out', 'w') as output_file:
         output_file.write(assembly_code)
+
 
 if __name__ == '__main__':
     main()
