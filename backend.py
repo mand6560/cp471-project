@@ -148,8 +148,7 @@ def generate(inter_code):
                         final_string += "," + curr_instr[-1] + "\n"
 
         space_str = ""
-    print("------------------")
-    print("final_string:\n"+final_string)
+    # print("final_string:\n"+final_string)
 
     return final_string
 
