@@ -85,5 +85,9 @@ def main():
     print(assembly_code)
     print('Info: Assembly Code was generated successfully\n')
 
+    # Write assembly code to executable file
+    with open('a.out', 'w') as output_file:
+        output_file.write(assembly_code)
+
 if __name__ == '__main__':
     main()
