@@ -25,7 +25,6 @@ def generate(inter_code):
     # address_descriptor = {}
 
     basic_blocks = get_basic_blocks(inter_code_arr)
-    # print(basic_blocks)
 
     temp_b_b = basic_blocks
     basic_blocks = []
@@ -39,38 +38,12 @@ def generate(inter_code):
                 temp.append(line)
         basic_blocks.append(temp)
 
-        #  temp = basic_blocks[k].pop(l)
-        #   temp = temp.split(" ", 1)
-        #    for element in temp:
-        #         basic_blocks[k].insert(element)
-        #     print("temp: ", temp)
-
-    # print(basic_blocks)
-
     for i in range(len(basic_blocks)):
         for j in range(len(basic_blocks[i])):
             curr_instr = basic_blocks[i][j].split(" ")
             if (":" in curr_instr[0]):
                 final_string += curr_instr[0].strip() + "\n"
 
-                # # print(curr_instr)
-                # if (curr_instr[2] == "="):
-                #     # space_str += " "
-                #     if (not(curr_instr[1] in register_map)):
-                #         register_map[curr_instr[1]] = "R{}".format(
-                #             register_count)
-                #         register_count += 1
-
-                #     final_string += "LD " + register_map[curr_instr[1]]
-                #     if (curr_instr[3].isdigit()):
-                #         final_string += ",#" + curr_instr[3] + "\n"
-                #     else:
-                #         final_string += "," + curr_instr[3] + "\n"
-                #     space_str += " "
-                # elif (curr_instr[1] == "if"):
-                #     pass
-                # elif (curr_instr[1] == "return"):
-                #     pass
             elif ("return" in curr_instr[0]):
                 final_string += "ST {},{}".format("RESULT",
                                                   register_map[curr_instr[1]]) + "\n"
@@ -116,7 +89,6 @@ def generate(inter_code):
             elif(curr_instr[1] == "="):
 
                 if (len(curr_instr) == 3):
-                    # print("strict eq", curr_instr)
 
                     if (not(curr_instr[0] in register_map)):
                         register_map[curr_instr[0]] = "R{}".format(
@@ -130,7 +102,6 @@ def generate(inter_code):
                     else:
                         final_string += "," + curr_instr[2] + "\n"
                 else:
-                    # print("strict eq", curr_instr)
                     if (not(curr_instr[0] in register_map)):
                         register_map[curr_instr[0]] = "R{}".format(
                             register_count)
@@ -217,9 +188,7 @@ def get_basic_blocks(inter_code_arr):
 
         else:
             temp.append(inter_code_arr[i])
-            # temp = []
 
     basic_blocks.append(temp)
     basic_blocks = basic_blocks[1:]
-    # print(basic_blocks)
     return basic_blocks
