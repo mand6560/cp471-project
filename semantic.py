@@ -28,7 +28,7 @@ def checker(tokens, symbol_table):
 
         elif classify == "RTRN_STMT" and value != "return":
             return "Error: {}, token not a valid return statement".format(SEMANTIC_ERROR)
-        
+
         elif classify == "func_def" and value != "func":
             return "Error: {}, token not a valid function declaration".format(SEMANTIC_ERROR)
 
@@ -82,4 +82,3 @@ def checker(tokens, symbol_table):
                 except KeyError:
                     return "Error: Oops something broke... It is what it is 8"
     return 1
-

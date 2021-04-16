@@ -1,4 +1,0 @@
-main:
-LD R1,#2
-ADD R2,R1,#1
-ST RESULT,R2
