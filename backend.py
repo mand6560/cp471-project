@@ -101,6 +101,7 @@ def generate(inter_code):
                 if (curr_instr[2] == ">="):
                     final_string += "BGE R{},R{},{}".format(
                         len(register_map)+1, len(register_map)+2, curr_instr[-1] + "\n")
+                
                 # elif ("")
 
             elif(curr_instr[1] == "="):
@@ -147,6 +148,7 @@ def generate(inter_code):
                         final_string += "," + curr_instr[-1] + "\n"
 
         space_str = ""
+    print("------------------")
     print("final_string:\n"+final_string)
 
     return final_string
